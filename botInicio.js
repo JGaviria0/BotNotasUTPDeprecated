@@ -4,6 +4,8 @@ const csv = require('csv-parse');
 const { time } = require("console");
 const gm = require("gm")
 const jimp = require('jimp');
+const chrome = require('selenium-webdriver/chrome');
+let opts = new chrome.Options();
 
 const url = 'https://app4.utp.edu.co/pe/'
 const url2 = 'https://app4.utp.edu.co/reportes/ryc/ReporteDetalladoNotasxEstudiante.php'
@@ -38,9 +40,6 @@ async function openUTP() {
 
 
     credenciales()
-    // psw = '1004995317'
-    // user = 'Matias1811'
-
     let driver = await new Builder().forBrowser("chrome").build()
     await driver.manage().window().maximize()
     await driver.get(url)
@@ -49,6 +48,9 @@ async function openUTP() {
     await (await driver.findElement(By.xpath("/html/body/div[1]/div[5]/div[2]/div[1]/form/div[5]/button[1]/span[2]"))).click()
     setTimeout(async function() {
         await driver.get(url2)
+        let ele = await driver.findElement(By.xpath("/html/body/table/tbody"))
+        let encodedString = await ele.takeScreenshot(true)
+        await fs.writeFileSync('./image.png', encodedString, 'base64')
         await driver.takeScreenshot().then(
             function(image, err) {
                 require('fs').writeFile('screenshot.png', image, 'base64', function(err) {
@@ -77,5 +79,3 @@ async function openUTP() {
 
 
 exports.openUTP=openUTP
-
-

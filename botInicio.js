@@ -2,7 +2,6 @@ const { Builder, By, Key, util, Capabilities} = require("selenium-webdriver")
 const fs = require('fs'); 
 const csv = require('csv-parse');
 const { time } = require("console");
-const gm = require("gm")
 const jimp = require('jimp');
 const chrome = require('selenium-webdriver/chrome');
 let opts = new chrome.Options();
@@ -37,8 +36,6 @@ function credenciales() {
 }
 
 async function openUTP() {
-
-
     credenciales()
     let driver = await new Builder().forBrowser("chrome").build()
     await driver.manage().window().maximize()
@@ -48,34 +45,24 @@ async function openUTP() {
     await (await driver.findElement(By.xpath("/html/body/div[1]/div[5]/div[2]/div[1]/form/div[5]/button[1]/span[2]"))).click()
     setTimeout(async function() {
         await driver.get(url2)
-        let ele = await driver.findElement(By.xpath("/html/body/table/tbody"))
-        let encodedString = await ele.takeScreenshot(true)
-        await fs.writeFileSync('./image.png', encodedString, 'base64')
-        await driver.takeScreenshot().then(
-            function(image, err) {
-                require('fs').writeFile('screenshot.png', image, 'base64', function(err) {
-                    if (err) console.log(err);
-                });
+        let ele = await driver.findElement(By.xpath("/html/body/table/tbody/tr[4]"))
+        let i = 4
+         while (true) {
+            try {
+                await (await driver.findElement(By.xpath("/html/body/table/tbody/tr[" + String(i+1) + "]"))).click()
+                ele = await driver.findElement(By.xpath("/html/body/table/tbody/tr[" + i + "]"))
+                let encodedString = await ele.takeScreenshot(true)
+                await fs.writeFileSync('./notas/image' + i +'.png' , encodedString, 'base64')
+                console.log(i + " Si senior")
+                
+            } catch (err) {
+                console.log("eppaaaa")
+                break
             }
-        );
-        await (await driver.findElement(By.xpath("/html/body/table/tbody/tr[18]/td/div"))).click()
-        await driver.takeScreenshot().then(
-            function(image, err) {
-                require('fs').writeFile('screenshot2.png', image, 'base64', function(err) {
-                    if (err) console.log(err);
-                });
-            }
-        );
-        return new Promise( async (res, rej) => {
-            const img = await jimp.read('screenshot.png')
-            await img.crop(639, 0, 630, 925).write('screenshotRecortado.png')
-            const img2 = await jimp.read('screenshot2.png')
-            await img2.crop(639, 0, 630, 925).write('screenshotRecortado2.png')
-            await driver.quit()
-            res(img)
-        })
+            i+=2
+        }    
     }, 1000);
 }
 
-
+//openUTP()
 exports.openUTP=openUTP

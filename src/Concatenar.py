@@ -1,4 +1,6 @@
 from PIL import Image
+from os import remove
+
 
 def unir():
     tam1 = 0
@@ -18,9 +20,12 @@ def unir():
 
     final = Image.new("RGB",(imagen[0].size[0], largo),"black")
     k = 0
+    i = 4
     for img in imagen:
         final.paste(img, (0,k))
+        remove("./notas/image" + str(i) + ".png")
         k += img.size[1]
+        i+=2
     
     final.save("./notas/notas.jpg")
    

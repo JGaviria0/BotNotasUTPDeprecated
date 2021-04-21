@@ -29,7 +29,7 @@ function crearCsv( cc, psw) {
 
 const ejecutarPy = () => {
     return new Promise ((resolve, reject) => {
-      spawn('python', ['./Concatenar.py'])
+      spawn('python', ['./src/Concatenar.py'])
       setTimeout(() => {
         resolve("listo")
       }, 1000);

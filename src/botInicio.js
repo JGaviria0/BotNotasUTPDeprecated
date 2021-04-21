@@ -58,7 +58,7 @@ async function openUTP() {
                 await (await driver.findElement(By.xpath("/html/body/table/tbody/tr[" + String(i+1) + "]"))).click()
                 ele = await driver.findElement(By.xpath("/html/body/table/tbody/tr[" + i + "]"))
                 let encodedString = await ele.takeScreenshot(true)
-                await fs.writeFileSync('./notas/image' + i +'.png' , encodedString, 'base64')
+                await fs.writeFileSync('./src/notas/image' + i +'.png' , encodedString, 'base64')
                 
             } catch (err) {
                 break

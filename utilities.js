@@ -29,13 +29,12 @@ function crearCsv( cc, psw) {
 
 const ejecutarPy = () => {
     return new Promise ((resolve, reject) => {
-      spawn('python', ['./botInicioPlataforma.py'])
+      spawn('python', ['./Concatenar.py'])
       setTimeout(() => {
         resolve("listo")
-      }, 27000);
+      }, 1000);
     })
 }
 
-
-
 exports.crearCsv=crearCsv
+exports.ejecutarPy=ejecutarPy

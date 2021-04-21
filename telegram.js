@@ -22,27 +22,25 @@ bot.command('notas', async (ctx) => {
         
         init_scraping.openUTP().then( async (resultado) => {
             setTimeout(async () => {
-                if (fs.existsSync("./screenshotRecortado.png") && fs.existsSync("./screenshotRecortado2.png")){
-                    await ctx.replyWithPhoto({source: 'screenshotRecortado.png'});
-                    await ctx.replyWithPhoto({source: 'screenshotRecortado2.png'});
-                    setTimeout(() => {
-                        fs.unlink('screenshotRecortado.png',function(err){
-                            if(err) return console.log(err);
-                        }); 
-                        fs.unlink('screenshotRecortado2.png',function(err){
-                            if(err) return console.log(err);
-                        });  
-                    }, 1000);
+                if ( fs.existsSync("./notas/notas.jpg")){
+                    await ctx.replyWithPhoto({source: 'notas/notas.jpg'});
+                    // await ctx.replyWithPhoto({source: 'screenshotRecortado2.png'});
+                    // setTimeout(() => {
+                    //     fs.unlink('screenshotRecortado.png',function(err){
+                    //         if(err) return console.log(err);
+                    //     }); 
+                    //     fs.unlink('screenshotRecortado2.png',function(err){
+                    //         if(err) return console.log(err);
+                    //     });  
+                    // }, 1000);
                     console.log("Enviado con exito a " + ctx.from.first_name) 
-                    console.log(resultado)  
+                 
                 } else {
                     console.log("Enviado sin exito a " + ctx.from.first_name) 
                     ctx.reply('Al parecer la pagina de la universidad no dio respuesta, intenta unos minutos mas tarde.')
                 }
             }, 27000);
-        })
-        
-                        
+        })              
     }
 })
 bot.launch()

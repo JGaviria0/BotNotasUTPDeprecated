@@ -1,5 +1,6 @@
 const { Builder, By, Key, util, Capabilities} = require("selenium-webdriver")
 const fs = require('fs'); 
+const ut = require("./utilities.js")
 const csv = require('csv-parse');
 const { time } = require("console");
 const jimp = require('jimp');
@@ -45,7 +46,12 @@ async function openUTP() {
     await (await driver.findElement(By.xpath("/html/body/div[1]/div[5]/div[2]/div[1]/form/div[5]/button[1]/span[2]"))).click()
     setTimeout(async function() {
         await driver.get(url2)
-        let ele = await driver.findElement(By.xpath("/html/body/table/tbody/tr[4]"))
+        try {
+            let ele = await driver.findElement(By.xpath("/html/body/table/tbody/tr[4]"))
+        } catch (err) {
+            console.log(err)
+            return err = 1
+        }
         let i = 4
          while (true) {
             try {
@@ -53,16 +59,14 @@ async function openUTP() {
                 ele = await driver.findElement(By.xpath("/html/body/table/tbody/tr[" + i + "]"))
                 let encodedString = await ele.takeScreenshot(true)
                 await fs.writeFileSync('./notas/image' + i +'.png' , encodedString, 'base64')
-                console.log(i + " Si senior")
                 
             } catch (err) {
-                console.log("eppaaaa")
                 break
             }
             i+=2
-        }    
+        }
+        driver.quit()
+        ut.ejecutarPy()    
     }, 1000);
 }
-
-//openUTP()
 exports.openUTP=openUTP

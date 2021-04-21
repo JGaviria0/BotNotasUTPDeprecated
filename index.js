@@ -1,6 +1,7 @@
 const { Telegraf }  = require('telegraf')
 const ut = require("./src/utilities.js")
 const init_scraping = require("./src/botInicio.js")
+const spawn = require('child_process').spawn
 const fs = require('fs');
 
 const keyFile = JSON.parse(fs.readFileSync('./src/keyFile.json').toString())
@@ -22,18 +23,19 @@ bot.command('notas', async (ctx) => {
         
         init_scraping.openUTP().then( async (resultado) => {
             setTimeout(async () => {
+                spawn('python', ['./src/Concatenar.py'])
                 if ( fs.existsSync("./src/notas/notas.jpg")){
                     await ctx.replyWithPhoto({source: 'src/notas/notas.jpg'});
                     setTimeout(() => {
-                        fs.unlink('./src/notas/notas.jpg',function(err){
-                            if(err) return console.log(err);
-                        });
+                        ut.deleteall()
                         ut.crearCsv("","")
                     }, 1000);
                     console.log("Enviado con exito a " + ctx.from.first_name) 
                  
                 } else {
                     console.log("Enviado sin exito a " + ctx.from.first_name) 
+                    ut.crearCsv("","")
+                    ut.deleteall()
                     ctx.reply('Al parecer la pagina de la universidad no dio respuesta, intenta unos minutos mas tarde.')
                 }
             }, 27000);

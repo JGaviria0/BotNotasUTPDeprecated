@@ -5,6 +5,8 @@ const csv = require('csv-parse');
 const { time } = require("console");
 const jimp = require('jimp');
 const chrome = require('selenium-webdriver/chrome');
+const { spawn } = require('child_process');
+const PythonShell = require('python-shell');
 let opts = new chrome.Options();
 
 const url = 'https://app4.utp.edu.co/pe/'
@@ -53,7 +55,7 @@ async function openUTP() {
             return err = 1
         }
         let i = 4
-         while (true) {
+        while (true) {
             try {
                 await (await driver.findElement(By.xpath("/html/body/table/tbody/tr[" + String(i+1) + "]"))).click()
                 ele = await driver.findElement(By.xpath("/html/body/table/tbody/tr[" + i + "]"))
@@ -66,7 +68,7 @@ async function openUTP() {
             i+=2
         }
         driver.quit()
-        ut.ejecutarPy()    
+        
     }, 1000);
 }
 exports.openUTP=openUTP

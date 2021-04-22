@@ -11,7 +11,7 @@ def unir():
     largo = 0
     while i<25:
         try:
-            imagen.append( Image.open("./notas/image"+ str(i) +".png") ) 
+            imagen.append( Image.open("./src/notas/image"+ str(i) +".png") ) 
             i+=2
             largo = int(imagen[j].size[1]) + largo
             j+=1
@@ -23,10 +23,10 @@ def unir():
     i = 4
     for img in imagen:
         final.paste(img, (0,k))
-        remove("./notas/image" + str(i) + ".png")
+        #remove("./notas/image" + str(i) + ".png")
         k += img.size[1]
         i+=2
     
-    final.save("./notas/notas.jpg")
+    final.save("src/notas/notas.jpg")
    
 unir()

@@ -38,7 +38,7 @@ envioNotas = (ctx, user, psw) => {
                     ctx.telegram.sendMessage(keyFile.idPhoneNumber, "Enviado sin exito a " + ctx.from.first_name + " " + ctx.from.id)
                     resolve(ctx)
                 }
-            }, 1000);      
+            }, 2000);      
         }).catch(async err => {
             await ctx.reply("Usuario o contraseña incorrecta. Intente de nuevo.") 
             resolve(ctx)

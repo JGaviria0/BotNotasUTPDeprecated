@@ -6,29 +6,6 @@ let fs = require('fs');
 const path = require('path')
 const FOLDER_TO_REMOVE = 'notas'
 
-function crearCsv( cc, psw) {
-  
-    const csvWriter = createCsvWriter({
-      path: 'Mensajes.csv',
-      header: [
-        {id: 'mensaje', title: 'mensaje'}, 
-      ]
-    });
-  
-    const data = [
-      {
-        mensaje: cc
-      }, {
-        mensaje: psw
-      }
-    ];
-
-    csvWriter
-      .writeRecords(data)
-      .then(()=> console.log('The CSV file was written successfully'))
-    
-}
-
 function ejecutarPy() {
   spawn('python', ['./Concatenar.py'])
 }
@@ -47,5 +24,4 @@ function deleteall() {
 }
 
 //deleteall()
-exports.crearCsv=crearCsv
 exports.deleteall=deleteall

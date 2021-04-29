@@ -6,6 +6,8 @@ const ut = require("../utilities.js")
 let fs = require('fs');
 const keyFile = JSON.parse(fs.readFileSync('./keyFile.json').toString())
 
+
+//No esta en funcionamiento
 const prefix = "!"
 
 fs.readFile('archivo.txt', 'utf-8', (err, data) => {
